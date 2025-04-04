@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>jQuery API Fetch Example</title>
+  <link rel="stylesheet" href="./styles/_common.css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+
+    .user-card {
+      background: white;
+      padding: 5px;
+      margin: 5px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      font-size: 10px;
+    }
+
+    .user-card h3 {
+      margin: 0 0 5px;
+    }
+
+    .user-card p {
+      margin: 2px 0;
+      color: #666;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
+<body>
+  <section class="border__cover fixed inset-0 flex items-start gap-2 overflow-hidden m-1 p-2">
+    <div class="border__blue h-full overflow-y-scroll p-2">
+      <h1>.ready function and data.forEach</h1>
+      <div id="users-container"></div>
+    </div>
+    <button class="continue border__blue btn"></button>
+    <div id="button-container" class="border__blue p-1">
+      <button class="btn">Click</button>
+      <div id="banner-message"
+        class="fixed w-full h-full inset-0 flex items-center justify-center mx-auto bg-gray-300 bg-opacity-25 hidden">
+        <div class="absolute top-1/2 left-1/2 bg-white w-40 h-40 rounded -translate-y-1/2 -translate-x-1/2 p-2">
+          message show by .show() jQuery
+          <button class="btn !bg-red-300 !text-white ml-auto" id="button-close">Close</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    // .ready
+    $(document).ready(function () {
+      $.get('https://jsonplaceholder.typicode.com/users', function (data) {
+        data.forEach(function (user) {
+          $('#users-container').append(`
+            <div class="user-card">
+              <h3>${user.name}</h3>
+              <p><strong>Email:</strong> ${user.email}</p>
+              <p><strong>Phone:</strong> ${user.phone}</p>
+              <p><strong>Website:</strong> ${user.website}</p>
+            </div>
+          `);
+        });
+      });
+    });
+
+    // .html
+    $("button.continue").html("$(class).html")
+
+    // .on("click", function(event))
+    var hiddenBox = $('#banner-message')
+    $('#button-container button').on('click', function (event) {
+      console.log('click')
+      // .show(duration,complete)
+      hiddenBox.show(600)
+    })
+    $('#button-container #button-close').on('click', function (event) {
+      hiddenBox.hide(1000)
+    })
+
+  </script>
+
+</body>
+
+</html>
